@@ -36,6 +36,7 @@ RUN apk update && \
       php7-xmlwriter \
       php7-tokenizer \
       php7-zlib \
+      php7-mysqli \
       php7-pdo_sqlite \
       php7-pdo_mysql \
       php7-pdo_pgsql && \
