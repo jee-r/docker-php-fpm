@@ -6,12 +6,6 @@ LABEL name="docker-php-fpm" \
       url="https://www.php.net" \
       org.label-schema.vcs-url="https://github.com/jee-r/docker-php-fpm"
 
-
-ARG UID=${UID:-1000}
-ARG GID=${GID:-1000}
-ARG USER_NAME=${USER_NAME:-php}
-ARG GROUP_NAME=${GROUP_NAME:-php}
-
 COPY php-fpm.conf /etc/php7/php-fpm.conf
 
 RUN apk update && \
@@ -45,21 +39,11 @@ RUN apk update && \
       php7-pdo_sqlite \
       php7-pdo_mysql \
       php7-pdo_pgsql && \
-      echo "Create user ${USER_NAME} with uid:${UID} and group with gid:${GID} ..." && \
-    if [ "$(grep ':'${GID}':' /etc/group)" == "" ]; then \
-      addgroup -g ${GID} ${GROUP_NAME}; \
-    else \
-      GROUP_NAME=$(grep ':'${GID}':' /etc/group | cut -d: -f1); \
-    fi && \
-    if [ "$(grep ${UID} /etc/passwd)" == "" ]; then \
-      adduser -h /app -s /bin/sh -G ${GROUP_NAME} -D -u ${UID} ${USER_NAME}; \
-    fi && \
     mkdir -p /php && \
-    mkdir -p /app/cron && \
-    chown -R ${UID}:${GID} /php /app
+    mkdir -p /app && \
+    chmod -R 777 /app /php
 
 WORKDIR /app
-USER $USER_NAME:$GROUP_NAME
 
 STOPSIGNAL SIGQUIT
 VOLUME ["/php", "/app"]
