@@ -28,6 +28,7 @@ RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.ircam.fr\/pub/' 
       php7-dom \
       php7-fileinfo \
       php7-iconv \
+      php7-gd \
       php7-json \
       php7-opcache \
       php7-phar \
