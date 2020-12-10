@@ -8,7 +8,8 @@ LABEL name="docker-php-fpm" \
 
 COPY php-fpm.conf /etc/php7/php-fpm.conf
 
-RUN apk update && \
+RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.ircam.fr\/pub/' /etc/apk/repositories && \
+    apk update && \
     apk upgrade && \
     apk add --upgrade --no-cache \
       git \
