@@ -54,6 +54,7 @@ steps:
   settings:
     remote:
       from_secret: remote_github
+    remote_name: github
     branch: master
     local_branch: master
     ssh_key:
@@ -70,6 +71,7 @@ steps:
   settings:
     remote:
       from_secret: remote_github
+    remote_name: github
     branch: dev
     local_branch: dev
     ssh_key:
