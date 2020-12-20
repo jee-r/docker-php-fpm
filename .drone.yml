@@ -59,12 +59,12 @@ steps:
     local_branch: master
     ssh_key:
       from_secret: ssh_private_key
-    when:
-      branch:
-        - master
-    event:
-      exclude:
-        - pull_request
+  when:
+    branch:
+      - master
+  event:
+    exclude:
+      - pull_request
 
 - name: mirroring_github_dev
   image: appleboy/drone-git-push
@@ -76,9 +76,9 @@ steps:
     local_branch: dev
     ssh_key:
       from_secret: ssh_private_key
-    when:
-      branch:
-        - dev
-    event:
-      exclude:
-        - pull_request
+  when:
+    branch:
+      - dev
+  event:
+    exclude:
+      - pull_request
