@@ -35,7 +35,6 @@ steps:
       exclude:
         - pull_request
 
-
 - name: test
   image: plugins/docker:latest
   settings:
@@ -49,3 +48,35 @@ steps:
   when:
     event:
       - pull_request
+
+- name: mirroring_github_master
+  image: appleboy/drone-git-push
+  settings:
+    remote:
+      from_secret: remote_github
+    branch: master
+    local_branch: master
+    ssh_key:
+      from_secret: ssh_private_key
+    when:
+      branch:
+        - master
+    event:
+      exclude:
+        - pull_request
+
+- name: mirroring_github_dev
+  image: appleboy/drone-git-push
+  settings:
+    remote:
+      from_secret: remote_github
+    branch: dev
+    local_branch: dev
+    ssh_key:
+      from_secret: ssh_private_key
+    when:
+      branch:
+        - dev
+    event:
+      exclude:
+        - pull_request
