@@ -1,5 +1,6 @@
 kind: pipeline
 name: default
+type: kubernetes
 
 steps:
 - name: build_master
@@ -34,7 +35,6 @@ steps:
       exclude:
         - pull_request
 
-
 - name: test
   image: plugins/docker:latest
   settings:
@@ -48,3 +48,37 @@ steps:
   when:
     event:
       - pull_request
+
+- name: mirroring_github
+  pull: always
+  image: j33r/git-mirror:latest
+  failure: ignore
+  environment:
+    GIT_MIRROR_USER: jee-r
+    GIT_MIRROR_TOKEN:
+      from_secret: GITHUB_TOKEN
+    GIT_MIRROR_REPO: github.com/jee-r/docker-php-fpm.git
+  when:
+    branch:
+      - master
+      - dev
+    event:
+      exclude:
+        - pull_request
+
+- name: mirroring_framagit
+  pull: always
+  image: j33r/git-mirror:latest
+  failure: ignore
+  environment:
+    GIT_MIRROR_USER: jee
+    GIT_MIRROR_TOKEN:
+      from_secret: FRAMAGIT_TOKEN
+    GIT_MIRROR_REPO: framagit.org/jee/docker-php-fpm.git
+  when:
+    branch:
+      - master
+      - dev
+    event:
+      exclude:
+        - pull_request
