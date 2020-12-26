@@ -53,7 +53,6 @@ steps:
   pull: always
   image: j33r/git-mirror:latest
   failure: ignore
-  detach: true
   environment:
     GIT_MIRROR_USER: jee-r
     GIT_MIRROR_TOKEN:
@@ -71,7 +70,6 @@ steps:
   pull: always
   image: j33r/git-mirror:latest
   failure: ignore
-  detach: true
   environment:
     GIT_MIRROR_USER: jee
     GIT_MIRROR_TOKEN:
