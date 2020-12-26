@@ -49,36 +49,34 @@ steps:
     event:
       - pull_request
 
-- name: mirroring_github_master
-  image: appleboy/drone-git-push
-  settings:
-    remote:
-      from_secret: remote_github
-    remote_name: github
-    branch: master
-    local_branch: master
-    ssh_key:
-      from_secret: ssh_private_key
+- name: mirroring_github
+  pull: always
+  image: j33r/git-mirror:latest
+  environment:
+    GIT_MIRROR_USER: jee-r
+    GIT_MIRROR_TOKEN:
+      from_secret: GITHUB_TOKEN
+    GIT_MIRROR_REPO: github.com/jee-r/docker-beets.git
   when:
     branch:
       - master
-  event:
-    exclude:
-      - pull_request
+      - dev
+    event:
+      exclude:
+        - pull_request
 
-- name: mirroring_github_dev
-  image: appleboy/drone-git-push
-  settings:
-    remote:
-      from_secret: remote_github
-    remote_name: github
-    branch: dev
-    local_branch: dev
-    ssh_key:
-      from_secret: ssh_private_key
+- name: mirroring_framagit
+  pull: always
+  image: j33r/git-mirror:latest
+  environment:
+    GIT_MIRROR_USER: jee
+    GIT_MIRROR_TOKEN:
+      from_secret: FRAMAGIT_TOKEN
+    GIT_MIRROR_REPO: framagit.org/jee/docker-php-fpm.git
   when:
     branch:
+      - master
       - dev
-  event:
-    exclude:
-      - pull_request
+    event:
+      exclude:
+        - pull_request
