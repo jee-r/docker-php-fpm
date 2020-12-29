@@ -77,12 +77,21 @@ You can also set the `HOME` environment variable this is usefull to get in the r
 | `composer`  | same as master | `composer` | |
 | `symfony` | same as master | `composer` | `symfony` |
 
+## Socket vs port
 
-
-## Socket or ports
-
-By default this image use `socket` protocol to bind `php-fpm` to a web-server ([apache](https://apache.org), [nginx](https://apache.org/)...). Socket file path is `/php/php-fpm.socket`
+By default this image use `socket` protocol to bind `php-fpm` to a web-server ([apache](https://apache.org), [nginx](https://apache.org/)...). Socket file path is accessible on `/php/php-fpm.socket`
 If you want use tcp protocol instead i need to overwrite `listen` value in [php-fpm.conf](https://www.php.net/manual/en/install.fpm.configuration.php) to `listen = 0.0.0.0:9000`
+
+## Logs
+
+If you use this image for developement purpose you will need  to see some to debug your stuff. By default php's error and access logs [are redirected](rootfs/etc/php7/php-fpm.conf#L3) to container logs.
+
+```bash
+docker logs --follow php-fpm
+# or with docker-compose
+docker-compose log --follow php-fpm
+# Ctrl+C to quit
+```  
 
 ## Docker Compose LEMP
 
@@ -94,8 +103,7 @@ If you want use tcp protocol instead i need to overwrite `listen` value in [php-
   - [nginxinc/nginx-unprivileged:alpine](https://hub.docker.com/r/nginxinc/nginx-unprivileged)
   - https://github.com/nginxinc/docker-nginx-unprivileged
 - db :
-  - [mariadb:latest](https://hub.docker.com/_/mariadb) \
-  or
+  - [mariadb:latest](https://hub.docker.com/_/mariadb)
   - [postgres:alpine](https://hub.docker.com/_/postgres)
 
 Here's an example `docker-compose.yml` config. Don't forget to **modify db passwords** specialy if you use this stack in produstion :
@@ -159,6 +167,49 @@ volumes:
   php:
   db:
 ```
+
+# Contributions
+
+### Short Story
+```bash
+# fork this repo then :
+git clone https://github/<YourName>/docker-php-fpm.git
+cd docker-php-fpm
+git checkout dev
+git pull origin dev
+# Do what you need to do, when you'r done then
+git add <modified.file> <second.modified.file> <whatever>
+git commit -m 'Your message that describe your change'
+git push origin dev
+# Submit a pull-request
+```
+### Long Story
+* [Fork this repo](https://duckduckgo.com/?q=how+fork+a+git+repository)
+
+* Clone your fork of this repo \
+  ```bash git clone https://github/<YourName>/docker-php-fpm.git```
+
+* **Always work on the `dev`  branch** \
+    ```bash cd docker-php-fpm``` <br>
+    ```bash git checkout dev```
+
+* be sure your fork's dev branch is up to database \
+  ```bash cd docker-php-fpm``` \
+  ```bash git pull origin dev```
+
+* Do what you need to do and when you'r done then \
+  For typo please try to make less commits as possible.
+
+* Add and commit your modifications \
+  ```bash git add <modified.file> <second.modified.file> <whatever>``` \
+  ```bash git commit -m 'Your message that describe your change'```
+
+* push on your fork \
+  ```bash  git push origin dev``` <br>
+
+* And finaly [open a pull request](https://github.com/jee-r/docker-php-fpm/compare) comparing your dev branch with mine
+
+If you find a vulnerability please contact me by mail  
 
 # License
 
