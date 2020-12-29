@@ -95,7 +95,6 @@ docker-compose log --follow php-fpm
 # Ctrl+C to quit
 ```  
 
-
 ## Docker Compose LEMP
 
 [`docker-compose`](https://docs.docker.com/compose/) can help with defining the `docker run` config in a repeatable way rather than ensuring you always pass the same CLI arguments.
