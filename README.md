@@ -12,10 +12,10 @@ A docker image for [php-fpm](https://php.net/) ![php-fpm's logo](https://www.php
 
 | Tags | Alpine | Php | Size | Layers |
 |-|-|-|-|-|
-| `latest`, `stable`, `master` | | 3.12 | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
-| `dev`  | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
-| `composer`  | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/composer?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/composer?style=flat-square) |
-| `symfony`  | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/symfony?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/symfony?style=flat-square) |
+| `latest`, `stable`, `master` | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
+| `dev` | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
+| `composer` | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/composer?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/composer?style=flat-square) |
+| `symfony` | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/symfony?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/symfony?style=flat-square) |
 
 # What is PHP-FPM?
 
@@ -74,7 +74,7 @@ You can also set the `HOME` environment variable this is usefull to get in the r
 |-|-|-|-|
 | `latest`, `stable`, `master` | `fpm`, `curl`, `gmp`, `intl`, `mbstring`, `xml`, `zip`, `ctype`, `dom`, `fileinfo`, `iconv`, `gd`, `json`, `opcache`, `phar`, `session`, `simplexml`, `xmlreader`, `xmlwriter`, `tokenizer`, `zlib`, `mysqli `, `pdo_sqlit`, `pdo_mysql`, `pdo_pgsql` |
 | `dev` | same as master | | |
-| `composer`  | same as master | | `symfony` |
+| `composer`  | same as master | `composer` | |
 | `symfony` | same as master | `composer` | `symfony` |
 
 
