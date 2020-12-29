@@ -10,12 +10,12 @@ A docker image for [php-fpm](https://php.net/) ![php-fpm's logo](https://www.php
 
 # Supported tags
 
-| Tags | Alpine | Php | Php-Extension | Size | Layers |
-|-|-|-|-|-|-|
-| `latest`, `stable`, `master` | 3.12 | | `fpm`, `curl`, `gmp`, `intl`, `mbstring`, `xml`, `zip`, `ctype`, `dom`, `fileinfo`, `iconv`, `gd`, `json`, `opcache`, `phar`, `session`, `simplexml`, `xmlreader`, `xmlwriter`, `tokenizer`, `zlib`, `mysqli `, `pdo_sqlit`, `pdo_mysql`, `pdo_pgsql` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
-| `dev`  | 3.12 | | same as master + `` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
-| `composer`  | 3.12 | | same as master + `symfony` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
-| `symfony`  | 3.12 | | same as master + `composer` + `symfony` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
+| Tags | Alpine | Php | Size | Layers |
+|-|-|-|-|-|
+| `latest`, `stable`, `master` | | 3.12 | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
+| `dev`  | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
+| `composer`  | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/composer?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/composer?style=flat-square) |
+| `symfony`  | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/symfony?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/symfony?style=flat-square) |
 
 # What is PHP-FPM?
 
@@ -67,6 +67,15 @@ You should create directory before run the container otherwise directories are c
 To change the timezone of the container set the `TZ` environment variable. The full list of available options can be found on [Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 You can also set the `HOME` environment variable this is usefull to get in the right directory when you attach a shell in your docker container.
+
+## Php Extension
+
+| Tags | Php-Extension | Package Manager | Framework |
+|-|-|-|-|
+| `latest`, `stable`, `master` | `fpm`, `curl`, `gmp`, `intl`, `mbstring`, `xml`, `zip`, `ctype`, `dom`, `fileinfo`, `iconv`, `gd`, `json`, `opcache`, `phar`, `session`, `simplexml`, `xmlreader`, `xmlwriter`, `tokenizer`, `zlib`, `mysqli `, `pdo_sqlit`, `pdo_mysql`, `pdo_pgsql` |
+| `dev` | same as master | | |
+| `composer`  | same as master | | `symfony` |
+| `symfony` | same as master | `composer` | `symfony` |
 
 
 
