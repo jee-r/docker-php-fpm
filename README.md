@@ -8,6 +8,7 @@
 
 A docker image for [php-fpm](https://php.net/) based on [Alpine Linux](https://alinelinux.org) and **[without root process](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user)**
 
+
 # Supported tags
 
 | Tags | Alpine | Php | Size | Layers |
@@ -45,6 +46,7 @@ docker run \
 - `/etc/php7/conf.d/00_custom.ini`: if you want overwrite default [php.ini config](https://www.php.net/manual/en/configuration.file.php)
 - `/app/phpinfo.php` instead of running an application you can mount this file to get [php info](https://www.php.net/manual/en/function.phpinfo.php)
 - `/php` the directory where php store the php-fpm.[pid](https://www.php.net/manual/en/install.fpm.configuration.php) and php-fpm.[socket](https://www.php.net/manual/en/install.fpm.configuration.php) files it's virtual volume so you can share it between container.
+
 
 ```bash
 docker run \
@@ -92,6 +94,7 @@ docker logs --follow php-fpm
 docker-compose log --follow php-fpm
 # Ctrl+C to quit
 ```  
+
 
 ## Docker Compose LEMP
 
