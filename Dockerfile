@@ -1,4 +1,4 @@
-FROM j33r/php-fpm:latest
+FROM j33r/php-fpm:composer
 
 LABEL name="docker-php-fpm" \
       maintainer="Jee jee@jeer.fr" \
@@ -9,16 +9,9 @@ LABEL name="docker-php-fpm" \
 RUN apk update && \
     apk upgrade && \
     cd /tmp && \
-    SIG_CHECKSUM="$(wget -O - https://composer.github.io/installer.sig)" && \
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    COMPOSER_CHECKSUM="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" && \
-    if [ "$SIG_CHECKSUM" != "$COMPOSER_CHECKSUM" ]; then \
-        echo 'ERROR: Invalid installer checksum' \
-        rm /tmp/composer-setup.php; \
-        exit 1; \
-    fi && \
-    php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
-    php -r "unlink('/tmp/composer-setup.php');" && \
+    wget https://get.symfony.com/cli/installer -O - | bash && \
+    mv /root/.symfony/bin/symfony /usr/local/bin/symfony && \
+    ln -s /usr/local/bin/symfony /usr/local/bin/symfony-cmd && \
     rm -rf /tmp/*
 
 WORKDIR /app
