@@ -4,7 +4,7 @@
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/j33r/php-fpm?style=flat-square)](https://microbadger.com/images/j33r/php-fpm)
 [![MicroBadger Layers](https://img.shields.io/microbadger/layers/j33r/php-fpm?style=flat-square)](https://microbadger.com/images/j33r/php-fpm)
 [![Docker Pulls](https://img.shields.io/docker/pulls/j33r/php-fpm?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
-[![DockerHub](https://img.shields.io/badge/Dockerhub-j33r/php-fpm-%232496ED?logo=docker&style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
+[![DockerHub](https://shields.io/badge/Dockerhub-j33r/php%E2%88%92fpm-%232496ED?logo=docker&style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 
 A docker image for [php-fpm](https://php.net/) ![php-fpm's logo](https://www.php.net/favicon.ico)
 
