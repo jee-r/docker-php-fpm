@@ -11,7 +11,7 @@ A docker image for [php-fpm](https://php.net/) ![php-fpm's logo](https://www.php
 # Supported tags
 
 | Tags | Alpine | Php | Php-Extension | Size | Layers |
-|-|-|-|-|-|
+|-|-|-|-|-|-|
 | `latest`, `stable`, `master` | 3.12 | | `fpm`, `curl`, `gmp`, `intl`, `mbstring`, `xml`, `zip`, `ctype`, `dom`, `fileinfo`, `iconv`, `gd`, `json`, `opcache`, `phar`, `session`, `simplexml`, `xmlreader`, `xmlwriter`, `tokenizer`, `zlib`, `mysqli `, `pdo_sqlit`, `pdo_mysql`, `pdo_pgsql` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
 | `dev`  | 3.12 | | same as master + `` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
 | `composer`  | 3.12 | | same as master + `symfony` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
