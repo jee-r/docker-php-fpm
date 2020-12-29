@@ -6,10 +6,9 @@ LABEL name="docker-php-fpm" \
       url="https://www.php.net" \
       org.label-schema.vcs-url="https://github.com/jee-r/docker-php-fpm"
 
-COPY php-fpm.conf /etc/php7/php-fpm.conf
+COPY rootfs /
 
-RUN sed -i 's/http:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.ircam.fr\/pub/' /etc/apk/repositories && \
-    apk update && \
+RUN apk update && \
     apk upgrade && \
     apk add --upgrade --no-cache \
       git \
