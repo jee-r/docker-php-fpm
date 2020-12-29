@@ -6,7 +6,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/j33r/php-fpm?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 [![DockerHub](https://shields.io/badge/Dockerhub-j33r/php%E2%88%92fpm-%232496ED?logo=docker&style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 
-A docker image for [php-fpm](https://php.net/) ![php-fpm's logo](https://www.php.net/favicon.ico)
+A docker image for [php-fpm](https://php.net/) based on [Alpine Linux](https://alinelinux.org) and **[without root process](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user)**
 
 # Supported tags
 
@@ -84,9 +84,11 @@ You can also set the `HOME` environment variable this is usefull to get in the r
 By default this image use `socket` protocol to bind `php-fpm` to a web-server ([apache](https://apache.org), [nginx](https://apache.org/)...). Socket file path is `/php/php-fpm.socket`
 If you want use tcp protocol instead i need to overwrite `listen` value in [php-fpm.conf](https://www.php.net/manual/en/install.fpm.configuration.php) to `listen = 0.0.0.0:9000`
 
-## Docker Compose (+ nginx)
+## Docker Compose LEMP
 
 [`docker-compose`](https://docs.docker.com/compose/) can help with defining the `docker run` config in a repeatable way rather than ensuring you always pass the same CLI arguments.
+
+**(Linux + Engine x + Mysql + Php)**
 
 Here's an example `docker-compose.yml` config:
 
@@ -99,29 +101,55 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
     restart: unless-stopped
     environment:
-        - HOME=/app
-        - TZ=Europe/Paris
+      - HOME=/app
+      - TZ=Europe/Paris
     volumes:
-        - /etc/localtime:/etc/localtime:ro
-        - ./php-fpm.conf:/etc/php7/php-fpm.conf
-        - ./php_custom.ini:/etc/php7/conf.d/00_custom.ini
-        - ./myapp:/app
-        - php:/php
+      - /etc/localtime:/etc/localtime:ro
+      - ./php-fpm.conf:/etc/php7/php-fpm.conf
+      - ./php_custom.ini:/etc/php7/conf.d/00_custom.ini
+      - ./myapp:/app
+      - php:/php
 
   nginx:
-    image: j33r/nginx:latest
+    image: nginxinc/nginx-unprivileged:alpine
     user: "${UID:-1000}:${GID:-1000}"
     restart: unless-stopped
     volumes:
-        - /etc/localtime:/etc/localtime:ro
-        - ./nginx_default.conf:/etc/nginx/conf.d/default.conf
-        - ./myapp:/app
-        - php:/php
+      - /etc/localtime:/etc/localtime:ro
+      - ./nginx_default.conf:/etc/nginx/conf.d/default.conf
+      - ./myapp:/app
+      - php:/php
     ports:
-        - "0.0.0.0:8080:8080"
+      - "0.0.0.0:8080:8080"
+
+  db:
+    image: mariadb:latest
+    container_name: db
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=database
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=db_password
+
+  # db:
+  #  image: postgres:alpine
+  #  container_name: postgres
+  #  restart: unless-stopped
+  #  networks:
+  #    - php-app
+  #  volumes:
+  #    - db:/var/lib/postgresql/data
+  #  environment:
+  #    - POSTGRES_USER=db_user
+  #    - POSTGRES_PASSWORD=db_password
+  #    - POSTGRES_DB=database
 
 volumes:
   php:
+  db:
 ```
 
 # License
