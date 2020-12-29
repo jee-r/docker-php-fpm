@@ -6,18 +6,20 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/j33r/php-fpm?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 [![DockerHub](https://img.shields.io/badge/Dockerhub-j33r/php-fpm-%232496ED?logo=docker&style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 
-A docker image for [php-fpm](https://php.net/) ![php-fpm's logo](https://user-images.githubusercontent.com/10530469/79228210-5ae36180-7e61-11ea-8f72-276e6197f011.png)
+A docker image for [php-fpm](https://php.net/) ![php-fpm's logo](https://www.php.net/favicon.ico)
 
 # Supported tags
 
-| Tags | Alpine | php | Size | Layers |
+| Tags | Alpine | Php | Php-Extension | Size | Layers |
 |-|-|-|-|-|
-| `latest`, `stable`, `master` | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
-| `dev`  | 3.12 | | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
+| `latest`, `stable`, `master` | 3.12 | | `fpm`, `curl`, `gmp`, `intl`, `mbstring`, `xml`, `zip`, `ctype`, `dom`, `fileinfo`, `iconv`, `gd`, `json`, `opcache`, `phar`, `session`, `simplexml`, `xmlreader`, `xmlwriter`, `tokenizer`, `zlib`, `mysqli `, `pdo_sqlit`, `pdo_mysql`, `pdo_pgsql` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
+| `dev`  | 3.12 | | same as master + `` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
+| `composer`  | 3.12 | | same as master + `symfony` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
+| `symfony`  | 3.12 | | same as master + `composer` + `symfony` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
 
 # What is PHP-FPM?
 
-From [php.net](https://www.qbittorrent.org/):
+From [php.net](https://php.net):
 
 >   PHP is a popular general-purpose scripting language that is especially suited to web development.
 >   Fast, flexible and pragmatic, PHP powers everything from your blog to the most popular websites in the world.
@@ -66,6 +68,8 @@ To change the timezone of the container set the `TZ` environment variable. The f
 
 You can also set the `HOME` environment variable this is usefull to get in the right directory when you attach a shell in your docker container.
 
+
+
 ## Socket or ports
 
 By default this image use `socket` protocol to bind `php-fpm` to a web-server ([apache](https://apache.org), [nginx](https://apache.org/)...). Socket file path is `/php/php-fpm.socket`
@@ -89,27 +93,26 @@ services:
         - HOME=/app
         - TZ=Europe/Paris
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./php-fpm.conf:/etc/php7/php-fpm.conf
-      - ./php_custom.ini:/etc/php7/conf.d/00_custom.ini
-      - ./myapp:/app
-      - php:/php
+        - /etc/localtime:/etc/localtime:ro
+        - ./php-fpm.conf:/etc/php7/php-fpm.conf
+        - ./php_custom.ini:/etc/php7/conf.d/00_custom.ini
+        - ./myapp:/app
+        - php:/php
 
   nginx:
     image: j33r/nginx:latest
     user: "${UID:-1000}:${GID:-1000}"
     restart: unless-stopped
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./nginx_default.conf:/etc/nginx/conf.d/default.conf
-      - ./myapp:/app
-      - php:/php
+        - /etc/localtime:/etc/localtime:ro
+        - ./nginx_default.conf:/etc/nginx/conf.d/default.conf
+        - ./myapp:/app
+        - php:/php
     ports:
-      - "0.0.0.0:8080:8080"
+        - "0.0.0.0:8080:8080"
 
 volumes:
   php:
-
 ```
 
 # License
