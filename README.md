@@ -90,7 +90,15 @@ If you want use tcp protocol instead i need to overwrite `listen` value in [php-
 
 **(Linux + Engine x + Mysql + Php)**
 
-Here's an example `docker-compose.yml` config:
+- nginx (no root)
+  - [nginxinc/nginx-unprivileged:alpine](https://hub.docker.com/r/nginxinc/nginx-unprivileged)
+  - https://github.com/nginxinc/docker-nginx-unprivileged
+- db :
+  - [mariadb:latest](https://hub.docker.com/_/mariadb) \
+  or
+  - [postgres:alpine](https://hub.docker.com/_/postgres)
+
+Here's an example `docker-compose.yml` config. Don't forget to **modify db passwords** specialy if you use this stack in produstion :
 
 ```yaml
 version: "3"
@@ -127,7 +135,7 @@ services:
     container_name: db
     restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/mysql/data
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=database
