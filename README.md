@@ -8,6 +8,7 @@
 
 A docker image for [php-fpm](https://php.net/) based on [Alpine Linux](https://alinelinux.org) and **[without root process](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user)**
 
+
 # Supported tags
 
 | Tags | Alpine | Php | Size | Layers |
@@ -46,6 +47,7 @@ docker run \
 - `/app/phpinfo.php` instead of running an application you can mount this file to get [php info](https://www.php.net/manual/en/function.phpinfo.php)
 - `/php` the directory where php store the php-fpm.[pid](https://www.php.net/manual/en/install.fpm.configuration.php) and php-fpm.[socket](https://www.php.net/manual/en/install.fpm.configuration.php) files it's virtual volume so you can share it between container.
 
+
 ```bash
 docker run \
     --detach \
@@ -83,6 +85,7 @@ You can also set the `HOME` environment variable this is usefull to get in the r
 
 By default this image use `socket` protocol to bind `php-fpm` to a web-server ([apache](https://apache.org), [nginx](https://apache.org/)...). Socket file path is `/php/php-fpm.socket`
 If you want use tcp protocol instead i need to overwrite `listen` value in [php-fpm.conf](https://www.php.net/manual/en/install.fpm.configuration.php) to `listen = 0.0.0.0:9000`
+
 
 ## Docker Compose LEMP
 
