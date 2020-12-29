@@ -189,25 +189,25 @@ git push origin dev
 * [Fork this repo](https://duckduckgo.com/?q=how+fork+a+git+repository)
 
 * Clone your fork of this repo \
-  ```bash git clone https://github/<YourName>/docker-php-fpm.git```
+  `git clone https://github/<YourName>/docker-php-fpm.git`
 
 * **Always work on the `dev`  branch** \
-    ```bash cd docker-php-fpm``` <br>
-    ```bash git checkout dev```
+    `cd docker-php-fpm` \
+    `git checkout dev`
 
 * be sure your fork's dev branch is up to database \
-  ```bash cd docker-php-fpm``` \
-  ```bash git pull origin dev```
+  `cd docker-php-fpm` \
+  `git pull origin dev`
 
 * Do what you need to do and when you'r done then \
   For typo please try to make less commits as possible.
 
 * Add and commit your modifications \
-  ```bash git add <modified.file> <second.modified.file> <whatever>``` \
-  ```bash git commit -m 'Your message that describe your change'```
+  `git add <modified.file> <second.modified.file> <whatever>` \
+  `git commit -m 'Your message that describe your change'`
 
 * push on your fork \
-  ```bash  git push origin dev``` <br>
+  ` git push origin dev` \
 
 * And finaly [open a pull request](https://github.com/jee-r/docker-php-fpm/compare) comparing your dev branch with mine
 
