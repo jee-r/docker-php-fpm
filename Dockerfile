@@ -8,6 +8,10 @@ LABEL name="docker-php-fpm" \
 
 RUN apk update && \
     apk upgrade && \
+    apk add --upgrade --no-cache \
+        nodejs \
+        npm && \
+    npm install -g yarn && \
     cd /tmp && \
     wget https://get.symfony.com/cli/installer -O - | bash && \
     mv /root/.symfony/bin/symfony /usr/local/bin/symfony && \
