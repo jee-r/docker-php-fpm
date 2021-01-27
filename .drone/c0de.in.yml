@@ -12,7 +12,7 @@ steps:
 - name: build
   image: plugins/docker:latest
   settings:
-    repo: j33r/deluge
+    repo: j33r/php-fpm
     dockerfile: Dockerfile
     username: j33r
     password:
@@ -25,7 +25,7 @@ steps:
 - name: test
   image: plugins/docker:latest
   settings:
-    repo: j33r/deluge
+    repo: j33r/php-fpm
     tags: latest
     dockerfile: Dockerfile
     username: j33r
@@ -35,4 +35,3 @@ steps:
   when:
     event:
       - pull_request
-
