@@ -21,16 +21,26 @@ From [php.net](https://php.net):
 
 # How to use these images
 
+All the lines commented in the examples below should be adapted to your environment. 
+
+Note: `--user $(id -u):$(id -g)` should work out of the box on linux systems. If your docker host run on windows or if you want specify an other user id and group id just replace with the appropriates values.
+
 ```bash
 docker run \
     --detach \
     --interactive \
     --name php-fpm \
-    --user $(id -u):$(id -g)
-    --env TZ=Europe/Paris
-    --volume /etc/localtime:/etc/localtime:ro
+    #--user $(id -u):$(id -g) \
+    #--env TZ=Europe/Paris
+    #--volume /path/to/your/php-fpm.conf:/etc/php7/php-fpm.conf \
+    #--volume /path/to/your/php.ini:/etc/php7/conf.d/00_custom.ini \
+    #--volume /path/to/your/app:/app \
+    #--volume php:/php \
+    #--volume /etc/localtime:/etc/localtime:ro \
     j33r/php-fpm:latest
-```    
+```
+
+See also the [Docker Compose section](#Docker-Compose-LEMP).
 
 ## Volume mounts
 
@@ -39,21 +49,6 @@ docker run \
 - `/etc/php7/conf.d/00_custom.ini`: if you want overwrite default [php.ini config](https://www.php.net/manual/en/configuration.file.php)
 - `/app/phpinfo.php` instead of running an application you can mount this file to get [php info](https://www.php.net/manual/en/function.phpinfo.php)
 - `/php` the directory where php store the php-fpm.[pid](https://www.php.net/manual/en/install.fpm.configuration.php) and php-fpm.[socket](https://www.php.net/manual/en/install.fpm.configuration.php) files it's virtual volume so you can share it between container.
-
-
-```bash
-docker run \
-    --detach \
-    --interactive \
-    --name php-fpm \
-    --user $(id -u):$(id -g) \
-    --volume /path/to/your/php-fpm.conf:/etc/php7/php-fpm.conf \
-    --volume /path/to/your/php.ini:/etc/php7/conf.d/00_custom.ini \
-    --volume /path/to/your/app:/app \
-    --volume php:/php \
-    --volume /etc/localtime:/etc/localtime:ro \
-    j33r/php-fpm:latest
-```
 
 You should create directory before run the container otherwise directories are created by the docker deamon and owned by the root user
 
@@ -71,12 +66,10 @@ You can also set the `HOME` environment variable this is usefull to get in the r
 
 ### How install additionnal module :
 
-if your php project need additionnals modules, easiest method is to use the tool [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) installed by default in this image. 
-
+if your php project need additionnals modules, easiest method is to use the tool [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) which is installed by default in this image. 
 
 ```
 docker exec -it my_php_app /usr/local/bin/docker-php-extension-installer gd 
-
 ```
 
 or by writing you own `Dockerfile`: 
@@ -84,15 +77,13 @@ or by writing you own `Dockerfile`:
 ```
 FROM j33r/php-fpm:latest
 
-RUN /usr/local/bin/docker-php-extension-installer \
-    gd
+RUN /usr/local/bin/docker-php-extension-installer gd
 ```
-
 
 ## Socket vs port
 
-By default this image use `socket` protocol to bind `php-fpm` to a web-server ([apache](https://apache.org), [nginx](https://apache.org/)...). Socket file path is accessible on `/php/php-fpm.socket`
-If you want use tcp protocol instead i need to overwrite `listen` value in [php-fpm.conf](https://www.php.net/manual/en/install.fpm.configuration.php) to `listen = 0.0.0.0:9000`
+By default   [PHP official docker images](https://hub.docker.com/_/php/) use `tcp` protocol to bind `php-fpm` to a web-server ([apache](https://apache.org), [nginx](https://apache.org/)...). Socket file path is accessible on `/php/php-fpm.socket`
+If you want use `socket` protocol instead you need to overwrite `listen` value in [php-fpm.conf](https://www.php.net/manual/en/install.fpm.configuration.php) to `listen = /php/php-fpm.sock`
 
 ## Logs
 
@@ -221,7 +212,7 @@ git push origin dev
 
 * And finaly [open a pull request](https://github.com/jee-r/docker-php-fpm/compare) comparing your dev branch with mine
 
-If you find a vulnerability please contact me by mail  
+If you find a vulnerability please contact me by mail
 
 # License
 
