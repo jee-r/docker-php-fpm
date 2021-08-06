@@ -17,25 +17,12 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
       bash \
       tzdata && \
     /usr/local/bin/install-php-extensions \
-      curl \
       gmp \
       intl \
-      xml \
       zip \
-      ctype \
-      dom \
-      fileinfo \
-      iconv \
-      json \
       opcache \
-      session \
-      simplexml \
-      xmlreader \
-      xmlwriter \
       tokenizer \
-      zlib \
       mysqli \
-      pdo_sqlite \
       pdo_pgsql \
       pdo_mysql && \
     mkdir -p /php && \
