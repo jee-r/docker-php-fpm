@@ -21,7 +21,6 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
       intl \
       zip \
       opcache \
-      tokenizer \
       mysqli \
       pdo_pgsql \
       pdo_mysql && \
