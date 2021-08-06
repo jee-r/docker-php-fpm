@@ -1,22 +1,16 @@
 # docker-php-fpm
 
-[![Drone (cloud)](https://img.shields.io/drone/build/jee-r/docker-php-fpm?&style=flat-square)](https://cloud.drone.io/jee-r/docker-php-fpm)
-[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/j33r/php-fpm?style=flat-square)](https://microbadger.com/images/j33r/php-fpm)
-[![MicroBadger Layers](https://img.shields.io/microbadger/layers/j33r/php-fpm?style=flat-square)](https://microbadger.com/images/j33r/php-fpm)
 [![Docker Pulls](https://img.shields.io/docker/pulls/j33r/php-fpm?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 [![DockerHub](https://shields.io/badge/Dockerhub-j33r/php%E2%88%92fpm-%232496ED?logo=docker&style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 
-A docker image for [php-fpm](https://php.net/) based on [Alpine Linux](https://alinelinux.org) and **[without root process](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user)**
-
+A docker image for [php-fpm](https://php.net/) based on [PHP official docker images 7-fpm-Alpine](https://hub.docker.com/_/php/)
 
 # Supported tags
 
-| Tags | Alpine | Php | Size | Layers |
-|-|-|-|-|-|
-| `latest`, `stable`, `master` | 3.12 | 7.3 | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/latest?style=flat-square) |
-| `dev` | 3.12 | 7.3 | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/dev?style=flat-square) |
-| `composer` | 3.12 | 7.3 | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/composer?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/composer?style=flat-square) |
-| `symfony` | 3.12 | 7.3 | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/symfony?style=flat-square) | ![MicroBadger Layers (tag)](https://img.shields.io/microbadger/layers/j33r/php-fpm/symfony?style=flat-square) |
+| Tags | Size | Build Status |
+|-|-|-|
+| `latest`, `stable`, `master` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | [![Drone (cloud) master build](https://img.shields.io/drone/build/jee-r/docker-php-fpm?label=latest&style=flat-square)](https://cloud.drone.io/jee-r/docker-php-fpm) |
+| `dev` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | [![Drone (cloud) dev build](https://img.shields.io/drone/build/jee-r/docker-php-fpm?label=dev&style=flat-square)](https://cloud.drone.io/jee-r/docker-php-fpm) |
 
 # What is PHP-FPM?
 
@@ -24,7 +18,6 @@ From [php.net](https://php.net):
 
 >   PHP is a popular general-purpose scripting language that is especially suited to web development.
 >   Fast, flexible and pragmatic, PHP powers everything from your blog to the most popular websites in the world.
-
 
 # How to use these images
 
@@ -70,14 +63,31 @@ To change the timezone of the container set the `TZ` environment variable. The f
 
 You can also set the `HOME` environment variable this is usefull to get in the right directory when you attach a shell in your docker container.
 
-## Php Extension
+## PHP Modules
 
-| Tags | Php-Extensions | Packages Managers | Frameworks | Additional packages |
-|-|-|-|-|-|
-| `latest`, `stable`, `master` | `fpm`, `curl`, `gmp`, `intl`, `mbstring`, `xml`, `zip`, `ctype`, `dom`, `fileinfo`, `iconv`, `gd`, `json`, `opcache`, `phar`, `session`, `simplexml`, `xmlreader`, `xmlwriter`, `tokenizer`, `zlib`, `mysqli `, `pdo_sqlit`, `pdo_mysql`, `pdo_pgsql` | |
-| `dev` | same as master | | | |
-| `composer`  | same as master | `composer` | | |
-| `symfony` | same as master | `composer`, `npm`, `yarn` | `symfony` | `Node.js` |
+### Available Php modules :
+
+`Core`, `ctype`, `curl`, `date`, `dom`, `fileinfo`, `filter`, `ftp`, `gmp`, `hash`, `iconv`, `intl`, `json`, `libxml`, `mbstring`, `mysqli`, `mysqlnd`, `openssl`, `pcre`, `PDO`, `pdo_mysql`, `pdo_pgsql`, `pdo_sqlite`, `Phar`, `posix`, `readline`, `Reflection`, `session`, `SimpleXML`, `sodium`, `SPL`, `sqlite3`, `standard`, `tokenizer`, `xml`, `xmlreader`, `xmlwriter`, `OPcache`, `zip`, `zlib`
+
+### How install additionnal module :
+
+if your php project need additionnals modules, easiest method is to use the tool [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) installed by default in this image. 
+
+
+```
+docker exec -it my_php_app /usr/local/bin/docker-php-extension-installer gd 
+
+```
+
+or by writing you own `Dockerfile`: 
+
+```
+FROM j33r/php-fpm:latest
+
+RUN /usr/local/bin/docker-php-extension-installer \
+    gd
+```
+
 
 ## Socket vs port
 
