@@ -3,16 +3,39 @@ name: docker_build
 type: docker
 
 steps:
-- name: build_main
+- name: master_build
   image: plugins/docker:latest
   settings:
     repo: j33r/php-fpm
-    context: main
-    dockerfile: main/Dockerfile
     username: j33r
     password:
       from_secret: DOCKER_HUB_TOKEN
+    dockerfile: Dockerfile
+    tags:
+      - latest
+      - stable 
+      - ${DRONE_COMMIT_SHA}
   when:
+    branch:
+      - master
+    event:
+      exclude:
+        - pull_request
+
+- name: dev_build
+  image: plugins/docker:latest
+  settings:
+    repo: j33r/php-fpm
+    username: j33r
+    password:
+      from_secret: DOCKER_HUB_TOKEN
+    dockerfile: Dockerfile
+    tags:
+      - dev
+      - ${DRONE_COMMIT_SHA}
+  when:
+    branch:
+      - master
     event:
       exclude:
         - pull_request
@@ -28,7 +51,6 @@ steps:
   image: plugins/docker:latest
   settings:
     repo: j33r/php-fpm
-    tags: latest
     dockerfile: Dockerfile
     username: j33r
     password:
