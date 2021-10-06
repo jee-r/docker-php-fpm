@@ -114,3 +114,21 @@ mirroring_to_github:
     - "git status"
   script:
     - "git push https://$GIT_MIRROR_USER:$GIT_MIRROR_TOKEN@$GIT_MIRROR_REPO $CI_COMMIT_BRANCH"
+      
+generate_image_info:
+  stage: info
+  image: 
+    name: "quay.io/buildah/stable:${BUILDAH_IMAGE_VERSION}"
+  script:
+    - "buildah pull docker-archive:${ARTIFACT_DIR}/${ARTIFACT_NAME}"
+    - "buildah run --tty ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} -- sh -c 'cat /etc/alpine-release' > info/alpine_release.txt"
+    - "buildah run --tty ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} -- sh -c 'php -m' > info/php_modules.txt"
+    - "buildah run --tty ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} -- sh -c 'php -v' > info/php_version.txt"
+  dependencies:
+    - "build"
+  artifacts:
+    name: "image_info"
+    when: "on_success"
+    expire_in: "6h"
+    paths:
+      - "info/"
