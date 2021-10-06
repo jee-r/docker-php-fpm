@@ -11,6 +11,7 @@ stages:
   - build
   - push
   - mirroring
+  - info
 
 workflow:
   rules:
