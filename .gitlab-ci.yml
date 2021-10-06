@@ -126,6 +126,7 @@ generate_image_info:
     - "buildah containers --all"
     - "mkdir info"
     - "buildah run --tty ${CI_PROJECT_NAME}-${CI_COMMIT_SHA} -- sh -c 'cat /etc/alpine-release' > info/alpine_release.txt"
+    - "buildah run --tty ${CI_PROJECT_NAME}-${CI_COMMIT_SHA} -- sh -c 'php -i' > info/php_info.txt"
     - "buildah run --tty ${CI_PROJECT_NAME}-${CI_COMMIT_SHA} -- sh -c 'php -m' > info/php_modules.txt"
     - "buildah run --tty ${CI_PROJECT_NAME}-${CI_COMMIT_SHA} -- sh -c 'php -v' > info/php_version.txt"
   dependencies:
