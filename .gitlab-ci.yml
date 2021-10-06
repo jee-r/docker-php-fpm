@@ -1,0 +1,116 @@
+variables:
+  ARTIFACT_DIR: "./archive" # must be relative to the build directory - https://gitlab.com/gitlab-org/gitlab-foss/-/issues/15530
+  ARTIFACT_NAME: "${CI_PROJECT_NAME}-build.tar"
+  STORAGE_DRIVER: "vfs"
+  BUILDAH_FORMAT: "docker"
+  TAG: "${CI_COMMIT_BRANCH}"
+  BUILDAH_IMAGE_VERSION: latest
+  GITLAB_NAMESPACE: "jee-r"
+  
+stages:
+  - build
+  - push
+  - mirroring
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      variables:
+        TAG: "latest" 
+    - when: always
+
+before_script:
+  - "export PROJECT_NAME=$(echo ${CI_PROJECT_NAME} | sed 's|^docker-||g')"
+
+build:
+  stage: "build"
+  image:
+    name: "quay.io/buildah/stable:${BUILDAH_IMAGE_VERSION}"
+  script:
+    - "buildah build -f Dockerfile -t ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} ."
+    - "mkdir ${ARTIFACT_DIR}"
+    - "buildah push ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} docker-archive:${ARTIFACT_DIR}/${ARTIFACT_NAME}:${CI_COMMIT_SHA}"
+  artifacts:
+    name: "archive:${ARTIFACT_NAME}:${CI_JOB_ID}"
+    when: "on_success"
+    expire_in: "6h"
+    paths:
+      - "${ARTIFACT_DIR}/"
+
+push_gitlab_registry:
+  stage: "push"
+  image:
+    name: "quay.io/buildah/stable:${BUILDAH_IMAGE_VERSION}"
+  only:
+    - "tags"
+    - "main"
+    - "master"
+    - "dev"
+  script:
+    - "buildah pull docker-archive:${ARTIFACT_DIR}/${ARTIFACT_NAME}"
+    - "echo $CI_REGISTRY_PASSWORD | buildah login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY"
+    - "buildah tag ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} ${CI_PROJECT_NAME}:${CI_COMMIT_BRANCH} ${CI_PROJECT_NAME}:${TAG}"
+    - "buildah push ${CI_PROJECT_NAME}:${CI_COMMIT_BRANCH} docker://${CI_REGISTRY_IMAGE}:${CI_COMMIT_BRANCH}"
+    - "buildah push ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} docker://${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
+    - "buildah push ${CI_PROJECT_NAME}:${TAG} docker://${CI_REGISTRY_IMAGE}:${TAG}"
+  dependencies:
+    - "build"
+
+push_dockerhub_registry:
+  stage: "push"
+  image:
+    name: "quay.io/buildah/stable:${BUILDAH_IMAGE_VERSION}"
+  only:
+    - "tags"
+    - "main"
+    - "master"
+    - "dev"
+  script:
+    - "buildah pull docker-archive:${ARTIFACT_DIR}/${ARTIFACT_NAME}"
+    - "echo $DH_REGISTRY_PASSWORD | buildah login -u $DH_REGISTRY_USER --password-stdin $DH_REGISTRY"
+    - "buildah tag ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} ${DH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_SHA} ${DH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_BRANCH} ${DH_REGISTRY_USER}/${PROJECT_NAME}:${TAG}"
+    - "buildah push ${DH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_BRANCH} docker://${DH_REGISTRY}/${DH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_BRANCH}"
+    - "buildah push ${DH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_SHA} docker://${DH_REGISTRY}/${DH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_SHA}"
+    - "buildah push ${DH_REGISTRY_USER}/${PROJECT_NAME}:${TAG} docker://${DH_REGISTRY}/${DH_REGISTRY_USER}/${PROJECT_NAME}:${TAG}"
+  dependencies:
+    - "build"
+      
+push_github_registry:
+  stage: "push"
+  image:
+    name: "quay.io/buildah/stable:${BUILDAH_IMAGE_VERSION}"
+  only:
+    - "tags"
+    - "main"
+    - "master"
+    - "dev"
+  script:
+    - "buildah pull docker-archive:${ARTIFACT_DIR}/${ARTIFACT_NAME}"
+    - "echo $GH_REGISTRY_PASSWORD | buildah login -u $GH_REGISTRY_USER --password-stdin $GH_REGISTRY"
+    - "buildah tag ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} ${GH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_SHA} ${GH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_BRANCH} ${GH_REGISTRY_USER}/${PROJECT_NAME}:${TAG}"
+    - "buildah push ${GH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_BRANCH} docker://${GH_REGISTRY}/${GH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_BRANCH}"
+    - "buildah push ${GH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_SHA} docker://${GH_REGISTRY}/${GH_REGISTRY_USER}/${PROJECT_NAME}:${CI_COMMIT_SHA}"
+    - "buildah push ${GH_REGISTRY_USER}/${PROJECT_NAME}:${TAG} docker://${GH_REGISTRY}/${GH_REGISTRY_USER}/${PROJECT_NAME}:${TAG}"
+  dependencies:
+    - "build"
+      
+mirroring_to_github:
+  stage: mirroring
+  image:
+    name: "${CI_REGISTRY}/${GITLAB_NAMESPACE}/docker-git-mirror:latest"
+    entrypoint: [""]
+  only:
+    - "tags"
+    - "main"
+    - "master"
+    - "dev"
+  variables:
+    GIT_STRATEGY: "clone"
+    GIT_MIRROR_REPO: "github.com/${GH_USER}/${CI_PROJECT_NAME}.git"
+    GIT_MIRROR_USER: "${GH_USER}"
+    GIT_MIRROR_TOKEN: "${GH_TOKEN}"
+  before_script:
+    - "git checkout ${CI_COMMIT_BRANCH}"
+    - "git status"
+  script:
+    - "git push https://$GIT_MIRROR_USER:$GIT_MIRROR_TOKEN@$GIT_MIRROR_REPO $CI_COMMIT_BRANCH"
