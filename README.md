@@ -7,10 +7,10 @@ A docker image for [php-fpm](https://php.net/) based on [PHP official docker ima
 
 # Supported tags
 
-| Tags | Size | Build Status |
-|-|-|-|
-| `latest`, `stable`, `master` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | [![Drone (cloud) master build](https://img.shields.io/drone/build/jee-r/docker-php-fpm?label=latest&style=flat-square)](https://cloud.drone.io/jee-r/docker-php-fpm) |
-| `dev` | ![](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | [![Drone (cloud) dev build](https://img.shields.io/drone/build/jee-r/docker-php-fpm?label=dev&style=flat-square)](https://cloud.drone.io/jee-r/docker-php-fpm) |
+| Tags | Size | Build Status | Image Infos | 
+|-|-|-| -|
+| `latest`, `stable`, `master` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) |![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/jee-r/docker-php-fpm/master?gitlab_url=https%3A%2F%2Fgitlab.com&label=%20&style=flat-square) | [![Master Artifacts](https://img.shields.io/static/v1?label=more&message=...&color=lightgrey&labelColor=lightgrey&style=flat-square)](https://gitlab.com/jee-r/docker-php-fpm/-/jobs/artifacts/master/browse?job=generate_image_info) |
+| `dev` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/jee-r/docker-php-fpm/dev?gitlab_url=https%3A%2F%2Fgitlab.com&label=%20&style=flat-square) | [![Dev Artifacts](https://img.shields.io/static/v1?label=more&message=...&color=lightgrey&labelColor=lightgrey&style=flat-square)](https://gitlab.com/jee-r/docker-php-fpm/-/jobs/artifacts/dev/browse?job=generate_image_info)
 
 # What is PHP-FPM?
 
