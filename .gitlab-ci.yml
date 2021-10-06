@@ -122,6 +122,7 @@ generate_image_info:
     name: "quay.io/buildah/stable:${BUILDAH_IMAGE_VERSION}"
   script:
     - "buildah pull docker-archive:${ARTIFACT_DIR}/${ARTIFACT_NAME}"
+    - "mkdir info"
     - "buildah run --tty ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} -- sh -c 'cat /etc/alpine-release' > info/alpine_release.txt"
     - "buildah run --tty ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} -- sh -c 'php -m' > info/php_modules.txt"
     - "buildah run --tty ${CI_PROJECT_NAME}:${CI_COMMIT_SHA} -- sh -c 'php -v' > info/php_version.txt"
