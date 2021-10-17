@@ -74,15 +74,15 @@ jobs:
           echo "==== PULL IMAGE ===="
           docker pull ${SHA_IMAGE_NAME}
           echo "==== PHP VERSION ===="
-          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -v
+          docker run --tty --user 0:0 --entrypoint '' ${SHA_IMAGE_NAME} php -v
           echo "==== PHP MODULES ===="
-          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -m
+          docker run --tty --user 0:0 --entrypoint '' ${SHA_IMAGE_NAME} php -m
           echo "==== PHP INFO ===="
-          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -i
+          docker run --tty --user 0:0 --entrypoint '' ${SHA_IMAGE_NAME} php -i
           echo "==== ALPINE VERSION ===="
-          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME}  cat /etc/alpine-release
+          docker run --tty --user 0:0 --entrypoint '' ${SHA_IMAGE_NAME} cat /etc/alpine-release
           echo "==== UNAME ===="
-          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} uname --all
+          docker run --tty --user 0:0 --entrypoint '' ${SHA_IMAGE_NAME} uname --all
       - name: upload_artifact
         uses: actions/upload-artifact@v2
         with:
