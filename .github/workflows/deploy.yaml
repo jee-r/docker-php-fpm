@@ -66,7 +66,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.MAIN_DOCKER_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }} 
-      - name: call-specs-workflow:
+      - name: call-specs-workflow
           uses: ${{ github.repository }}/.github/workflows/specs.yaml
           with:
             GIT_BRANCH: ${{ env.GIT_BRANCH }
