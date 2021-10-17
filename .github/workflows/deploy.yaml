@@ -67,7 +67,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.MAIN_DOCKER_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }} 
   call-specs-workflow:
-    uses: ${{ github.repository }}.github/workflows/specs.yaml@${{ .env.GIT_BRANCH }}
+    uses: ${{ github.repository }}/.github/workflows/specs.yaml@${{ .env.GIT_BRANCH }}
     with:
       GIT_BRANCH: ${{ env.GIT_BRANCH }}
       sha_image_name: ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
