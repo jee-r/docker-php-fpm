@@ -71,16 +71,18 @@ jobs:
           export SHA_IMAGE_NAME=ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
           export BRANCH_IMAGE_NAME=ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }}
           mkdir -p artifacts
-          echo "==== PHP VERSION ====" >> artifacts/php_specs.txt
-          echo "$(docker run -tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -v)" >> artifacts/php_specs.txt
-          echo "==== PHP MODULES ====" >> artifacts/php_specs.txt
-          echo "$(docker run -tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -m)" >> artifacts/php_specs.txt
-          echo "==== PHP INFO ====" >> artifacts/php_specs.txt
-          echo "$(docker run -tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -i)" >> artifacts/php_specs.txt
-          echo "==== ALPINE VERSION ====" >> artifacts/alpine_specs.txt
-          echo "$(docker run -tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME}  cat /etc/alpine-release)" >> artifacts/alpine_specs.txt
-          echo "==== UNAME ====" >> artifacts/php_specs.txt
-          echo "$(docker run -tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} uname --all)" >> artifacts/alpine_specs.txt
+          echo "==== PULL IMAGE ===="
+          docker pull ${SHA_IMAGE_NAME}
+          echo "==== PHP VERSION ===="
+          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -v
+          echo "==== PHP MODULES ===="
+          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -m
+          echo "==== PHP INFO ===="
+          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} php -i
+          echo "==== ALPINE VERSION ===="
+          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME}  cat /etc/alpine-release
+          echo "==== UNAME ===="
+          docker run --tty --user 0:0  --entrypoint='' ${SHA_IMAGE_NAME} uname --all
       - name: upload_artifact
         uses: actions/upload-artifact@v2
         with:
