@@ -18,9 +18,9 @@ jobs:
     name: Build, tag, and publish Docker image
     runs-on: ubuntu-latest
     steps:
-      name: php_specs      
+      - name: php_specs      
         run: |
-          mkdir -p /artifacts
+          mkdir -p artifacts
           echo "==== PHP VERSION ====" >> artifacts/php_specs.txt
           echo "$(docker run -tty --user 0:0  --entrypoint='' ${{ sha_image_name }} php -v)" >> artifacts/php_specs.txt
           echo "==== PHP MODULES ====" >> artifacts/php_specs.txt
