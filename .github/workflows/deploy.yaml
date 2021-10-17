@@ -71,13 +71,13 @@ jobs:
         with:
           image: ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
           run: |
-          echo "==== PHP VERSION ===="
-          php -v
-          echo "==== PHP MODULES ===="
-          php -m
-          echo "==== PHP INFO ===="
-          php -i
-          echo "==== ALPINE VERSION ===="
-          cat /etc/alpine-release
-          echo "==== UNAME ===="
-          uname --all
+            echo "==== PHP VERSION ===="
+            php -v
+            echo "==== PHP MODULES ===="
+            php -m
+            echo "==== PHP INFO ===="
+            php -i
+            echo "==== ALPINE VERSION ===="
+            cat /etc/alpine-release
+            echo "==== UNAME ===="
+            uname --all
