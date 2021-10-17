@@ -67,10 +67,9 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.MAIN_DOCKER_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }} 
       - name: php_specs      
-        with:
-          sha_image_name: ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
-          branch_image_name: ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }}
         run: |
+          export SHA_IMAGE_NAME=ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
+          export BRANCH_IMAGE_NAME=ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }}
           mkdir -p artifacts
           echo "==== PHP VERSION ====" >> artifacts/php_specs.txt
           echo "$(docker run -tty --user 0:0  --entrypoint='' ${{ sha_image_name }} php -v)" >> artifacts/php_specs.txt
