@@ -42,7 +42,7 @@ jobs:
         id: step4
         run: |
           SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`
-          echo "::set-output name=SHORT_SHA::SHORT_SHA"
+          echo "::set-output name=SHORT_SHA::$SHORT_SHA"
   build:
     name: Build, tag, and publish Docker image
     needs: pre-build
