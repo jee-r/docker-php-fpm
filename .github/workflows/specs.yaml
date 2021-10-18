@@ -1,18 +1,11 @@
 name: Specs workflow
 
 on:
-  workflow_call:
-    inputs:
-      sha_image_name:
-        required: true
-        type: string
-      branch_image_name:
-        required: true
-        type: string
-      GIT_BRANCH:
-        required: true
-        type: string
-    
+  workflow_run:
+    workflows: ["Deploy"]
+    types:
+      - completed
+
 jobs:
   specs:
     name: Build, tag, and publish Docker image
