@@ -14,18 +14,18 @@ jobs:
     name: Set tag variable
     runs-on: ubuntu-latest
     outputs:
-      GIT_BRANCH: ${{ steps.1.outputs.GIT_BRANCH }}
-      MAIN_DOCKER_TAG: ${{ steps.2.outputs.MAIN_DOCKER_TAG }}
-      IMAGE_NAME: ${{ steps.3.outputs.IMAGE_NAME }}
-      SHORT_SHA: ${{ steps.3.outputs.SHORT_SHA }}
+      GIT_BRANCH: ${{ steps.step1.outputs.GIT_BRANCH }}
+      MAIN_DOCKER_TAG: ${{ steps.step2.outputs.MAIN_DOCKER_TAG }}
+      IMAGE_NAME: ${{ steps.step3.outputs.IMAGE_NAME }}
+      SHORT_SHA: ${{ steps.step4.outputs.SHORT_SHA }}
     steps:
       - name: Get branch
-        id: 1
+        id: step1
         run: |
           GIT_BRANCH="${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}"
           echo "::set-output name=GIT_BRANCH::$GIT_BRANCH"
       - name: Set main docker image tag 
-        id: 2
+        id: step2
         run: |
           if [[ "$GIT_BRANCh" == "main" ]] || [[ "$GIT_BRANCH" == "master" ]]; then
             MAIN_DOCKER_TAG=latest
@@ -34,12 +34,12 @@ jobs:
           fi
           echo "::set-output name=MAIN_DOCKER_TAG::$MAIN_DOCKER_TAG"
       - name: remove docker from repo name
-        id: 3
+        id: step3
         run: |
           IMAGE_NAME=$(echo ${{ github.repository }} | sed 's|^jee-r/docker-||g')
           echo "::set-output name=IMAGE_NAME::$IMAGE_NAME"
       - name: crop SHA
-        id: 4
+        id: step4
         run: |
           SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`
           echo "::set-output name=SHORT_SHA::SHORT_SHA"
