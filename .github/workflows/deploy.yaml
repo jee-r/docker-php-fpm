@@ -66,7 +66,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.MAIN_DOCKER_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }} 
-      - name: php_specs      
+      - name: specs      
         uses: addnab/docker-run-action@v3
         with:
           image: ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
