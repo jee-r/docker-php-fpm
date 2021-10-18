@@ -10,8 +10,8 @@ on:
 
 
 jobs:
-  build:
-    name: Build, tag, and publish Docker image
+  pre-build:
+    name: Set tag variable
     runs-on: ubuntu-latest
     steps:
       - name: Get branch
@@ -30,8 +30,11 @@ jobs:
       - name: crop SHA
         run: |
           echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
-      - name: print env
-        run: echo $ENV
+  build:
+    name: Build, tag, and publish Docker image
+    needs: pre-build
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
@@ -66,8 +69,14 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.MAIN_DOCKER_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.GIT_BRANCH }} 
+  post-build:
+    name: Generate Specs info
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: specs      
         uses: addnab/docker-run-action@v3
+        needs: build
         with:
           image: ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
           run: |
