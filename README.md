@@ -11,8 +11,8 @@ A docker image for [php-fpm](https://php.net/) based on [PHP official docker ima
 
 | Tags | Size | Platforms | Build | 
 |-|-|-|-|
-| `latest`, `stable`, `master` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | `amd64` | ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jee-r/docker-php-fpm/Deploy/master?style=flat-square) |
-| `dev` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | `amd64` | ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jee-r/docker-php-fpm/Deploy/dev?style=flat-square) |
+| `latest`, `master` | [![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm/tags?page=1&name=master) | `amd64` | [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jee-r/docker-php-fpm/Deploy/master?style=flat-square)](https://github.com/jee-r/docker-php-fpm/actions/workflows/deploy.yaml?query=branch%3Amaster) |
+| `dev` | [![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm/tags?page=1&name=dev) | `amd64` | [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jee-r/docker-php-fpm/Deploy/dev?style=flat-square)](https://github.com/jee-r/docker-php-fpm/actions/workflows/deploy.yaml?query=branch%3Adev) |
 
 
 _PHP Version, PHP Info, installed PHP's modules and Alpine Version are available on [Github Action](https://github.com/jee-r/docker-php-fpm/actions/workflows/.yam) under **`specs`** job._
