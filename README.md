@@ -15,7 +15,7 @@ A docker image for [php-fpm](https://php.net/) based on [PHP official docker ima
 | `dev` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | `amd64` | ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jee-r/docker-php-fpm/Deploy/dev?style=flat-square) |
 
 
-_PHP Version, PHP Info, installed PHP's modules and Alpine Version are available on [Github Action in the Deploy](https://github.com/jee-r/docker-php-fpm/actions/workflows/deploy.yam) under **`specs`** step_
+_PHP Version, PHP Info, installed PHP's modules and Alpine Version are available on [Github Action](https://github.com/jee-r/docker-php-fpm/actions/workflows/.yam) under **`specs`** job._
 
 # What is PHP-FPM?
 
