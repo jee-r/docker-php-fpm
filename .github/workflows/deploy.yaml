@@ -13,7 +13,7 @@ jobs:
   pre-build:
     name: Set tag variable
     runs-on: ubuntu-latest
-    output:
+    outputs:
       GIT_BRANCH: ${{ steps.1.outputs.GIT_BRANCH }}
       MAIN_DOCKER_TAG: ${{ steps.2.outputs.MAIN_DOCKER_TAG }}
       IMAGE_NAME: ${{ steps.3.outputs.IMAGE_NAME }}
