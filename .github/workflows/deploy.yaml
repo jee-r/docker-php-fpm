@@ -76,7 +76,6 @@ jobs:
     steps:
       - name: specs      
         uses: addnab/docker-run-action@v3
-        needs: build
         with:
           image: ghcr.io/${{ github.actor }}/${{ env.IMAGE_NAME }}:${{ env.SHORT_SHA }}
           run: |
