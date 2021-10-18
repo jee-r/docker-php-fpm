@@ -1,16 +1,21 @@
 # docker-php-fpm
 
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/j33r/php-fpm?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
 [![Docker Pulls](https://img.shields.io/docker/pulls/j33r/php-fpm?style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
-[![DockerHub](https://shields.io/badge/Dockerhub-j33r/php%E2%88%92fpm-%232496ED?logo=docker&style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
+[![DockerHub](https://shields.io/badge/Dockerhub-j33r/php%2D-fpm-%232496ED?logo=docker&style=flat-square)](https://hub.docker.com/r/j33r/php-fpm)
+[![ghcr.io](https://img.shields.io/badge/ghrc%2Eio-jee%2D-r/php%2D-fpm-%232496ED?logo=github&style=flat-square)](https://ghcr.io/jee-r/php-fpm)
 
 A docker image for [php-fpm](https://php.net/) based on [PHP official docker images 7-fpm-Alpine](https://hub.docker.com/_/php/)
 
 # Supported tags
 
-| Tags | Size | Build Status | Image Infos | 
-|-|-|-| -|
-| `latest`, `stable`, `master` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) |![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/jee-r/docker-php-fpm/master?gitlab_url=https%3A%2F%2Fgitlab.com&label=%20&style=flat-square) | [![Master Artifacts](https://img.shields.io/static/v1?label=more&message=...&color=lightgrey&labelColor=lightgrey&style=flat-square)](https://gitlab.com/jee-r/docker-php-fpm/-/jobs/artifacts/master/browse?job=generate_image_info) |
-| `dev` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | ![Gitlab pipeline status (self-hosted)](https://img.shields.io/gitlab/pipeline/jee-r/docker-php-fpm/dev?gitlab_url=https%3A%2F%2Fgitlab.com&label=%20&style=flat-square) | [![Dev Artifacts](https://img.shields.io/static/v1?label=more&message=...&color=lightgrey&labelColor=lightgrey&style=flat-square)](https://gitlab.com/jee-r/docker-php-fpm/-/jobs/artifacts/dev/browse?job=generate_image_info)
+| Tags | Size | Platforms | Build | 
+|-|-|-|-|
+| `latest`, `stable`, `master` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/latest?style=flat-square) | `amd64` | ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jee-r/docker-php-fpm/Deploy/master?style=flat-square) |
+| `dev` | ![Image Size](https://img.shields.io/docker/image-size/j33r/php-fpm/dev?style=flat-square) | `amd64` | ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jee-r/docker-php-fpm/Deploy/dev?style=flat-square) |
+
+
+_PHP Version, PHP Info, installed PHP's modules and Alpine Version are available on [Github Action](https://github.com/jee-r/docker-php-fpm/actions/workflows/.yam) under **`specs`** job._
 
 # What is PHP-FPM?
 
@@ -58,13 +63,7 @@ To change the timezone of the container set the `TZ` environment variable. The f
 
 You can also set the `HOME` environment variable this is usefull to get in the right directory when you attach a shell in your docker container.
 
-## PHP Modules
-
-### Available Php modules :
-
-`Core`, `ctype`, `curl`, `date`, `dom`, `fileinfo`, `filter`, `ftp`, `gmp`, `hash`, `iconv`, `intl`, `json`, `libxml`, `mbstring`, `mysqli`, `mysqlnd`, `openssl`, `pcre`, `PDO`, `pdo_mysql`, `pdo_pgsql`, `pdo_sqlite`, `Phar`, `posix`, `readline`, `Reflection`, `session`, `SimpleXML`, `sodium`, `SPL`, `sqlite3`, `standard`, `tokenizer`, `xml`, `xmlreader`, `xmlwriter`, `OPcache`, `zip`, `zlib`
-
-### How install additionnal module :
+## How install additionnal module :
 
 if your php project need additionnals modules, easiest method is to use the tool [docker-php-extension-installer](https://github.com/mlocati/docker-php-extension-installer) which is installed by default in this image. 
 
