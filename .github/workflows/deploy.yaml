@@ -23,14 +23,15 @@ jobs:
         id: step1
         run: |
           GIT_BRANCH="${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}"
+          echo "GIT_BRANCH=${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
           echo "::set-output name=GIT_BRANCH::$GIT_BRANCH"
       - name: Set main docker image tag 
         id: step2
         run: |
-          if [[ "$GIT_BRANCh" == "main" ]] || [[ "$GIT_BRANCH" == "master" ]]; then
+          if [[ "${{ env.GIT_BRANCH }}" == "main" ]] || [[ "${{ env.GIT_BRANCH }}" == "master" ]]; then
             MAIN_DOCKER_TAG=latest
           else
-            MAIN_DOCKER_TAG=$GIT_BRANCH
+            MAIN_DOCKER_TAG=${{ env.GIT_BRANCH }}
           fi
           echo "::set-output name=MAIN_DOCKER_TAG::$MAIN_DOCKER_TAG"
       - name: remove docker from repo name
